@@ -1,53 +1,80 @@
-// Map to MongoRepository
-// https://www.technicalkeeda.com/spring-tutorials/spring-4-mongodb-repository-example
-
 package tachyonis.space.model;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.bson.types.ObjectId;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+import java.sql.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import tachyonis.space.model.Currently;
 
+@Entity
 public class Location {
-    private String latitude;
-    private String longitude;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private ObjectId oid;
+    private long latitude;
+    private long longtitude;
     private String timezone;
     private Currently currently;
+    private Date created;
+    private Date updated;
 
-    //Location Constructor
-    public Location() {
-        super();
+    public Location(){}
+
+    public ObjectId getOid() {
+        return oid;
     }
 
-    public String getLatitude(){
+    public void setOid(ObjectId oid) {
+        this.oid = oid;
+    }
+
+    public long getLatitude() {
         return latitude;
     }
 
-    public void setlatitude(String latitude){
+    public void setLatitude(long latitude) {
         this.latitude = latitude;
     }
 
-    public String getlongitude(){
-        return longitude;
+    public long getLongtitude() {
+        return longtitude;
     }
 
-    public void setlongitude(String longitude){
-        this.longitude = longitude;
+    public void setLongtitude(long longtitude) {
+        this.longtitude = longtitude;
     }
 
-    public String gettimezone(){
+    public String getTimezone() {
         return timezone;
     }
 
-    public void settimezone(String timezone ){
+    public void setTimezone(String timezone) {
         this.timezone = timezone;
     }
 
-    public Currently getcurrently(){return currently;}
-
-    public void setcurrently(){ this.currently = currently ; }
-
-    @Override
-    public String toString() {
-        return "Location=" + latitude + "," + longitude + " timezone=" + timezone + " data " + currently ;
+    public Currently getCurrently() {
+        return currently;
     }
 
+    public void setCurrently(Currently currently) {
+        this.currently = currently;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 }
