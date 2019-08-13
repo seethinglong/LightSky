@@ -4,25 +4,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import tachyonis.space.model.Location;
-import static java.util.concurrent.TimeUnit.*;
-import java.util.concurrent.*;
-import java.util.Arrays;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 @SpringBootApplication
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan
 @Service
 public class TachyonApp {
 	private static final Logger log = LoggerFactory.getLogger(TachyonApp.class);
@@ -36,14 +35,14 @@ public class TachyonApp {
 	private final int HTTP_CONNECT_TIMEOUT = 1000;
 	private final int HTTP_READ_TIMEOUT = 1000;
 
-	public void ScheudleTask() {
-		int interval = 5 ;
-		int duration = 60 * 60 ;
+	private void ScheudleTask() {
+		int interval = 50;
+		int duration = 3 * 24 * 60 * 60;
 		final Runnable task1 = new Runnable() {
 			public void run() {
 				log.info("===== Tachyon Schedules Task Every " + interval + "seconds ==========");
 				//darksky();
-				//tc.getAll();
+				tc.getAll();
 			}
 		};
 		final ScheduledFuture<?> Handle =
@@ -52,11 +51,11 @@ public class TachyonApp {
 			public void run() { Handle.cancel(true); }
 		}, duration , SECONDS);
 
-		int housekeep = 10 ;
+		int housekeep = 150;
 		final Runnable task2 = new Runnable() {
 			public void run() {
 				log.info("===== Tachyon HouseKeep Every " + housekeep + "seconds ==========");
-				//tc.HouseKeepMongoDB();
+				tc.HouseKeepMongoDB();
 				tc.FindMongoCollection();
 			}
 	    };
