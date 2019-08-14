@@ -7,7 +7,7 @@ Java application using Spring Boot obtains weather data from DarkSky API
  
  - Springframework 5 Spint Boot v2.1.6
  - Maven
- - JAVA webservice REST CRUD javax.ws.rs-api 2.0
+ - JAVA webservice REST CRUD javax.ws.rs-api 2.0 [ Modified from Spring 5 example gs-consuming-rest ]
  - JAVA Integrated Sping MongoDB 2.1.9.RELEASE built-in
  - JAVA MongoDB Driver 3.11.0-rc0 to Cloud cloud.mongodb.com
  - JAVA 1.8 ( OpenJDK 8 )
